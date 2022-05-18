@@ -73,10 +73,10 @@ class Alvo:
         self.x, self.y = x, y
         self.color = self.RED
         self.radius = self.RADIUS
-        self.turn_green: int = max(
+        self.turn_green = max(
             self.TURN_GREEN - (nivel * FPS * 0.15), FPS/5)
         self.lifetime = 0
-        self.despawn: int = max(self.DESPAWN - (nivel * FPS * 0.08), FPS/5)
+        self.despawn = max(self.DESPAWN - (nivel * FPS * 0.08), FPS/5)
         self.clickable = False
 
     def draw(self):
@@ -120,14 +120,14 @@ def main_menu():
 # Loop
 def main():
     alvos = []
-    spawn_delay_counter:int = 0
+    spawn_delay_counter = 0
     clock = pygame.time.Clock()
-    nivel:int = 0
-    acertos:int = 0
-    score:int = 0
+    nivel = 0
+    acertos = 0
+    score = 0
     cursor = Cursor()
     perdeu = False
-    show_score_time:int = 0
+    show_score_time = 0
     mouse.set_visible(False)
     running = True
 
@@ -168,9 +168,10 @@ def main():
                     if alvo.clickable == True and alvo.collide(cursor):
                         alvos.remove(alvo)
                         acertos += 1
-                        score += 100 - round(max((alvo.lifetime - alvo.turn_green) * 100 / Alvo.DESPAWN, 10))
+                        score_plus = 100 - round(max((alvo.lifetime - alvo.turn_green) * 100 / Alvo.DESPAWN, 10))
+                        score += score_plus
                         SCORE_SFX.play()
-                        print(str(score))
+                        print(str(score_plus))
                     else:
                         MISS_SFX.play()
                         alvos.remove(alvo)
